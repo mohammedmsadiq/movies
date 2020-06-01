@@ -35,13 +35,4 @@
     <Folder Include="Controls\" />
     <Folder Include="Fonts\" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Views\MainPage.xaml.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Fonts\OpenSans-Light.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="**/*" />
-  </ItemGroup>
 </Project>
