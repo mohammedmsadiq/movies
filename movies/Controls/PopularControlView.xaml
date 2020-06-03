@@ -8,6 +8,7 @@
     x:Class="movies.Controls.PopularControlView">
     <ContentView.Content>
         <flv:FlowListView
+            BackgroundColor="Transparent"
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand"
             HasUnevenRows="false"

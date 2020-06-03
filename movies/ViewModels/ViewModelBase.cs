@@ -27,6 +27,13 @@ namespace movies.ViewModels
         protected INavigationService NavigationService { get; private set; }
         protected IPageDialogService DialogService { get; private set; }
 
+        private bool isNoImage = false;
+        public bool IsNoImage
+        {
+            get => this.isNoImage;
+            set => SetProperty(ref this.isNoImage, value);
+        }
+
         private bool _isBusy;
         public bool IsBusy
         {

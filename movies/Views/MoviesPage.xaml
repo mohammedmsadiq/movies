@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+    xmlns:controls="clr-namespace:movies.Controls"
+    BackgroundColor="Black"
+    xmlns:sk="clr-namespace:Xamarin.Forms.Skeleton;assembly=Xamarin.Forms.Skeleton"
+    xmlns:tab="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms"
+    x:Class="movies.Views.MoviesPage">
+    <ContentPage.Content>
+        <Grid
+            BackgroundColor="Transparent"
+            RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition>
+                    <RowDefinition.Height>
+                        <OnPlatform
+                            Android="0"
+                            iOS="50" />
+                    </RowDefinition.Height>
+                </RowDefinition>
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="50" />
+                <RowDefinition
+                    Height="2*" />
+            </Grid.RowDefinitions>
+            <Grid
+                BackgroundColor="Transparent"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Grid.Row="1">
+                <CarouselView
+                    BackgroundColor="Transparent"
+                    x:Name="LatestCarousel"
+                    ItemsSource="{Binding UpcomingData}">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                BackgroundColor="Transparent"
+                                sk:Skeleton.IsBusy="{Binding IsBusy}"
+                                sk:Skeleton.Hide="True">
+                                <ffimageloading:CachedImage
+                                    IsVisible="{Binding IsNoImage}"
+                                    Aspect="AspectFill"
+                                    Source="image_not_found.png" />
+                                <ffimageloading:CachedImage
+                                    x:Name="backdrop"
+                                    Aspect="AspectFill"
+                                    Source="{Binding backdrop_path, Converter={StaticResource ImageStringFormatConverter}}" />
+                                <StackLayout
+                                    VerticalOptions="End"
+                                    HeightRequest="120"
+                                    Margin="10"
+                                    Orientation="Horizontal">
+                                    <Frame
+                                        HasShadow="True"
+                                        BorderColor="Transparent"
+                                        Padding="0">
+                                        <ffimageloading:CachedImage
+                                            x:Name="Poster"
+                                            Aspect="AspectFill"
+                                            Source="{Binding poster_path, Converter={StaticResource ImageStringFormatConverter}}" />
+                                    </Frame>
+                                    <Label
+                                        VerticalOptions="End"
+                                        HorizontalOptions="Start"
+                                        Margin="10"
+                                        FontSize="Title"
+                                        TextColor="White"
+                                        Text="{Binding title}">
+                                        <Label.Effects>
+                                            <controls:ShadowEffect
+                                                Color="Black"
+                                                Radius="5"
+                                                DistanceX="5"
+                                                DistanceY="5" />
+                                        </Label.Effects>
+                                    </Label>
+                                </StackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+            </Grid>
+            <tab:TabHostView
+                BackgroundColor="Black"
+                Grid.Row="2"
+                VerticalOptions="Start"
+                ShadowType="None"
+                TabType="Scrollable"
+                SelectedIndex="{Binding Source={x:Reference Switcher}, Path=SelectedIndex, Mode=TwoWay}">
+                <tab:TabHostView.Tabs>
+                    <tab:UnderlinedTabItem
+                        Margin="10"
+                        SelectedTabColor="Red"
+                        UnselectedLabelColor="Gray"
+                        UnderlineAllTab="True"
+                        Label="Now Playing" />
+                    <tab:UnderlinedTabItem
+                        Margin="10"
+                        SelectedTabColor="Red"
+                        UnselectedLabelColor="Gray"
+                        UnderlineAllTab="True"
+                        Label="Top Rated" />
+                    <tab:UnderlinedTabItem
+                        Margin="10"
+                        SelectedTabColor="Red"
+                        UnselectedLabelColor="Gray"
+                        UnderlineAllTab="True"
+                        Label="Popular" />
+                </tab:TabHostView.Tabs>
+            </tab:TabHostView>
+            <tab:ViewSwitcher
+                Grid.Row="3"
+                x:Name="Switcher"
+                Animate="True"
+                SelectedIndex="{Binding SelectedViewModelIndex, Mode=TwoWay}">
+                <controls:NowPlayingControlView />
+                <controls:TopRatedControlView />
+                <controls:PopularControlView />
+            </tab:ViewSwitcher>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

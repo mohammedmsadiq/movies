@@ -9,10 +9,6 @@ namespace movies.AppConfig
         public static string NowPlaying = "now_playing";
         public static string Upcoming = "upcoming";
         public static string TopRated = "top_rated";
-        public static string Latest = "latest";
         public static string Popular = "popular";
-
-
-
     }
 }

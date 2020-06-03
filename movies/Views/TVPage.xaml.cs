@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using Xamarin.Forms;
 
-namespace movies.Controls
+namespace movies.Views
 {
-    public partial class LatestControlView : ContentView
+    public partial class TVPage : ContentPage
     {
-        public LatestControlView()
+        public TVPage()
         {
             InitializeComponent();
         }

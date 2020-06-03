@@ -8,9 +8,9 @@ using Xamarin.Forms.PlatformConfiguration;
 
 namespace movies.Views
 {
-    public partial class HomePage : ContentPage
+    public partial class MoviesPage : ContentPage
     {
-        public HomePage()
+        public MoviesPage()
         {
             InitializeComponent();
         }       

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using DLToolkit.Forms.Controls;
 using movies.Interfaces;
 using movies.Services;
@@ -43,19 +44,21 @@ namespace movies
 
             Device.SetFlags(new string[]
             {
-                //"CarouselView_Experimental",
+                "CarouselView_Experimental",
                 "MediaElement_Experimental",
                 "IndicatorView_Experimental",
                 "SwipeView_Experimental"
             });
 
-            await NavigationService.NavigateAsync("NavigationPage/HomePage");
+            await NavigationService.NavigateAsync("MyTabbedPage?selectedTab=MoviesPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
+            containerRegistry.RegisterForNavigation<MyTabbedPage>();
+            containerRegistry.RegisterForNavigation<MoviesPage, MoviesPageViewModel>();
+            containerRegistry.RegisterForNavigation<TVPage, TVPageViewModel>();
 
 
             containerRegistry.RegisterSingleton<ISimpleRequestService, SimpleRequestService>();

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:pr="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
+    x:Class="movies.Controls.MovieCollectionViewControl">
+    <ContentView.Content>
+        <flv:FlowListView
+            BackgroundColor="Transparent"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            HasUnevenRows="false"
+            FlowUseAbsoluteLayoutInternally="false"
+            FlowColumnCount="3"
+            RowHeight="200"
+            FlowItemsSource="{Binding Source={x:Reference this}, Path=MovieItemSource, Mode=TwoWay}">
+            <flv:FlowListView.FlowLoadingTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+                            TextColor="Black"
+                            Text="Loading..."></Label>
+                    </ViewCell>
+                </DataTemplate>
+            </flv:FlowListView.FlowLoadingTemplate>
+            <flv:FlowListView.FlowColumnTemplate>
+                <DataTemplate>
+                    <Grid
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand">
+                        <ffimageloading:CachedImage
+                            x:Name="Poster"
+                            Aspect="AspectFill"
+                            Source="{Binding poster_path, Converter={StaticResource ImageStringFormatConverter}}" />
+                        <Frame
+                            HasShadow="True"
+                            CornerRadius="16"
+                            Padding="0"
+                            BackgroundColor="White"
+                            Margin="10"
+                            HeightRequest="32"
+                            WidthRequest="32"
+                            VerticalOptions="EndAndExpand"
+                            HorizontalOptions="EndAndExpand">
+                            <Grid
+                                VerticalOptions="FillAndExpand"
+                                HorizontalOptions="FillAndExpand">
+                                <pr:ProgressRing
+                                    HeightRequest="30"
+                                    WidthRequest="30"
+                                    VerticalOptions="FillAndExpand"
+                                    HorizontalOptions="FillAndExpand"
+                                    RingThickness="2"
+                                    Progress="{Binding decimal_popularity}" />
+                                <Label
+                                    FontSize="10"
+                                    TextColor="Black"
+                                    Text="{Binding rounded_popularity}"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center" />
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </flv:FlowListView.FlowColumnTemplate>
+        </flv:FlowListView>
+    </ContentView.Content>
+</ContentView>

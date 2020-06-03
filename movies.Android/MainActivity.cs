@@ -11,6 +11,7 @@ using Prism;
 using FFImageLoading.Forms.Platform;
 using Sharpnado.Presentation.Forms.Droid;
 using CarouselView.FormsPlugin.Android;
+using Xamarin.Forms;
 
 namespace movies.Droid
 {
@@ -24,7 +25,7 @@ namespace movies.Droid
 
             base.OnCreate(savedInstanceState);
 
-            CachedImageRenderer.Init();
+            CachedImageRenderer.Init(true);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             SharpnadoInitializer.Initialize();

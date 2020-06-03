@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using movies.Interfaces;
@@ -11,12 +12,11 @@ using Xamarin.Forms;
 
 namespace movies.ViewModels
 {
-    public class HomePageViewModel : ViewModelBase
+    public class MoviesPageViewModel : ViewModelBase
     {
         private ObservableCollection<Result> nowPlayingData;
         private ObservableCollection<Result> upcomingData;
         private ObservableCollection<Result> popularData;
-        private ObservableCollection<Result> latestData;
         private ObservableCollection<Result> topRatedData;
         private int totalPagesAvaliable;
         private int currentLoadedPage;
@@ -25,9 +25,8 @@ namespace movies.ViewModels
         private int selectedViewModelIndex;
 
 
-        public HomePageViewModel(INavigationService navigationService, IPageDialogService dialogService, ISimpleRequestService simpleRequestService) : base(navigationService, dialogService, simpleRequestService)
+        public MoviesPageViewModel(INavigationService navigationService, IPageDialogService dialogService, ISimpleRequestService simpleRequestService) : base(navigationService, dialogService, simpleRequestService)
         {
-            //this.LoadMoreCommand = new DelegateCommand(async () => { await this.loadMore(); });
         }
 
         public override void OnAppearing()
@@ -44,10 +43,11 @@ namespace movies.ViewModels
             this.UpcomingData = new ObservableCollection<Result>();
             this.TopRatedData = new ObservableCollection<Result>();
             this.PopularData = new ObservableCollection<Result>();
-            this.LatestData = new ObservableCollection<Result>();
 
             var URLParams = new NavigationParameters();
             URLParams.Add("api_key", AppConfig.ConfigConstants.ApiKey);
+            URLParams.Add("region", RegionInfo.CurrentRegion.TwoLetterISORegionName);
+            URLParams.Add("language", CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
 
             string nowPLayingUrl = AppConfig.ConfigConstants.NowPlaying + URLParams.ToString();
             var nowPLayingResult = await SimpleRequestService.GetSimpleAsync<MoviesModel>(nowPLayingUrl);
@@ -61,16 +61,12 @@ namespace movies.ViewModels
             var PopularResult = await SimpleRequestService.GetSimpleAsync<MoviesModel>(popularUrl);
             loadPopularModel(PopularResult);
 
-            string latestUrl = AppConfig.ConfigConstants.Upcoming + URLParams.ToString();
-            var LatestResult = await SimpleRequestService.GetSimpleAsync<MoviesModel>(latestUrl);
-            loadLatestModel(LatestResult);
-
             string topRatedUrl = AppConfig.ConfigConstants.Upcoming + URLParams.ToString();
             var topRatedResult = await SimpleRequestService.GetSimpleAsync<MoviesModel>(topRatedUrl);
             loadTopRatedModel(topRatedResult);
 
             IsBusy = false;
-
+            IsNoImage = true;
         }
 
         private void loadTopRatedModel(MoviesModel topRatedResult)
@@ -97,34 +93,6 @@ namespace movies.ViewModels
                         vote_count = item.vote_count
                     };
                     this.TopRatedData.Add(taskToAdd);
-                }
-            }
-        }
-
-        private void loadLatestModel(MoviesModel latestResult)
-        {
-            if (latestResult != null)
-            {
-                foreach (var item in latestResult.results)
-                {
-                    var taskToAdd = new Result
-                    {
-                        poster_path = item.poster_path,
-                        adult = item.adult,
-                        backdrop_path = item.backdrop_path,
-                        genre_ids = item.genre_ids,
-                        id = item.id,
-                        original_language = item.original_language,
-                        original_title = item.original_title,
-                        overview = item.overview,
-                        popularity = Math.Round(item.popularity, 0),
-                        release_date = item.release_date,
-                        title = item.title,
-                        video = item.video,
-                        vote_average = item.vote_average,
-                        vote_count = item.vote_count
-                    };
-                    this.LatestData.Add(taskToAdd);
                 }
             }
         }
@@ -233,12 +201,6 @@ namespace movies.ViewModels
             set => SetProperty(ref this.popularData, value);
         }
 
-        public ObservableCollection<Result> LatestData
-        {
-            get => this.latestData;
-            set => SetProperty(ref this.latestData, value);
-        }
-
         public ObservableCollection<Result> TopRatedData
         {
             get => this.topRatedData;
@@ -267,7 +229,7 @@ namespace movies.ViewModels
         {
             get => this.isLoadingInfinite;
             set => SetProperty(ref this.isLoadingInfinite, value);
-        }
+        }       
 
         public int SelectedViewModelIndex
         {
