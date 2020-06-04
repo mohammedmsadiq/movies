@@ -9,6 +9,7 @@
     x:Class="movies.Controls.NowPlayingControlView">
     <ContentView.Content>
         <flv:FlowListView
+            BackgroundColor="Transparent"
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand"
             HasUnevenRows="false"
@@ -16,9 +17,7 @@
             FlowColumnCount="3"
             RowHeight="200"
             FlowItemsSource="{Binding NowPlayingData}"
-            FlowIsLoadingInfinite="{Binding IsLoadingInfinite}"
-            FlowIsLoadingInfiniteEnabled="true"
-            FlowLoadingCommand="{Binding LoadMoreCommand}">
+            FlowItemTappedCommand="{Binding ItemSelectedCommand}">
             <flv:FlowListView.FlowLoadingTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -32,7 +31,7 @@
             </flv:FlowListView.FlowLoadingTemplate>
             <flv:FlowListView.FlowColumnTemplate>
                 <DataTemplate>
-                    <local:PercentageProgressControlView/>
+                    <local:PercentageProgressControlView />
                 </DataTemplate>
             </flv:FlowListView.FlowColumnTemplate>
         </flv:FlowListView>

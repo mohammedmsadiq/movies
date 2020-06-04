@@ -12,6 +12,7 @@
         Aspect="AspectFill"
         Source="{Binding poster_path, Converter={StaticResource ImageStringFormatConverter}}" />
     <Frame
+        IsVisible="{Binding IsVoteRingVisible}"
         HasShadow="True"
         CornerRadius="16"
         Padding="0"
@@ -27,14 +28,15 @@
             <pr:ProgressRing
                 HeightRequest="30"
                 WidthRequest="30"
+                RingProgressColor="Red"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 RingThickness="2"
-                Progress="{Binding decimal_popularity}" />
+                Progress="{Binding decimal_vote_average}" />
             <Label
                 FontSize="10"
                 TextColor="Black"
-                Text="{Binding rounded_popularity}"
+                Text="{Binding vote_average}"
                 VerticalOptions="Center"
                 HorizontalOptions="Center" />
         </Grid>

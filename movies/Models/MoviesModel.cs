@@ -14,8 +14,8 @@ namespace movies.Models
 
     public class Result
     {
-        public double decimal_popularity => Math.Round(popularity / 100, 2);
-        public string rounded_popularity => Math.Round(popularity, 0) + "%";
+        public double decimal_vote_average => Math.Round(vote_average / 10, 2);
+        public bool IsVoteRingVisible => vote_average > 0 ? true : false;
         public double popularity { get; set; }
         public int vote_count { get; set; }
         public bool video { get; set; }

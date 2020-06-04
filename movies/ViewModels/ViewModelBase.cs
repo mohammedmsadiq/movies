@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using movies.Interfaces;
 using Prism;
 using Prism.AppModel;
@@ -15,17 +16,21 @@ namespace movies.ViewModels
     public class ViewModelBase : BindableBase, INavigationAware, IDestructible, IPageLifecycleAware, IApplicationLifecycleAware, IConfirmNavigationAsync,
       IConfirmNavigation, IActiveAware, INotifyPropertyChanged
     {
+        protected readonly INavigationService NavigationService;
+        protected readonly IPageDialogService DialogService;
         protected readonly ISimpleRequestService SimpleRequestService;
+
+        public ICommand BackCommand { get; set; }
 
         public ViewModelBase(INavigationService navigationService, IPageDialogService dialogService, ISimpleRequestService simpleRequestService)
         {
             this.NavigationService = navigationService;
             this.DialogService = dialogService;
             this.SimpleRequestService = simpleRequestService;
+
+            this.BackCommand = new DelegateCommand(async () => { await this.BackTaskAsync(); });
         }
 
-        protected INavigationService NavigationService { get; private set; }
-        protected IPageDialogService DialogService { get; private set; }
 
         private bool isNoImage = false;
         public bool IsNoImage
@@ -46,6 +51,11 @@ namespace movies.ViewModels
         {
             get => _title;
             set => SetProperty(ref _title, value);
+        }
+
+        private async Task BackTaskAsync()
+        {
+            await this.NavigationService.GoBackAsync();
         }
 
         public bool IsNotBusy { get; set; }

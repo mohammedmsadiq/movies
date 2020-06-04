@@ -10,5 +10,9 @@ namespace movies.Controls
         {
             InitializeComponent();
         }
+
+        void FlowListView_ItemSelected(System.Object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        {
+        }
     }
 }

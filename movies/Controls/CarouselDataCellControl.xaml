@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:controls="clr-namespace:movies.Controls"
+    x:Class="movies.Controls.CarouselDataCellControl"
+    BackgroundColor="Transparent">
+    <ffimageloading:CachedImage
+        IsVisible="{Binding IsNoImage}"
+        Aspect="AspectFill"
+        Source="image_not_found.png" />
+    <ffimageloading:CachedImage
+        x:Name="backdrop"
+        Aspect="AspectFill"
+        Source="{Binding backdrop_path, Converter={StaticResource ImageStringFormatConverter}}" />
+    <StackLayout
+        VerticalOptions="End"
+        HeightRequest="120"
+        Margin="10"
+        Orientation="Horizontal">
+        <Frame
+            HasShadow="True"
+            BorderColor="Transparent"
+            Padding="0">
+            <ffimageloading:CachedImage
+                x:Name="Poster"
+                Aspect="AspectFill"
+                Source="{Binding poster_path, Converter={StaticResource ImageStringFormatConverter}}" />
+        </Frame>
+        <Label
+            VerticalOptions="End"
+            HorizontalOptions="Start"
+            Margin="10"
+            FontSize="Title"
+            TextColor="White"
+            Text="{Binding title}">
+            <Label.Effects>
+                <controls:ShadowEffect
+                    Color="Black"
+                    Radius="5"
+                    DistanceX="5"
+                    DistanceY="5" />
+            </Label.Effects>
+        </Label>
+    </StackLayout>
+</Grid>

@@ -59,6 +59,7 @@ namespace movies
             containerRegistry.RegisterForNavigation<MyTabbedPage>();
             containerRegistry.RegisterForNavigation<MoviesPage, MoviesPageViewModel>();
             containerRegistry.RegisterForNavigation<TVPage, TVPageViewModel>();
+            containerRegistry.RegisterForNavigation<MovieDetailPage, MovieDetailPageViewModel>();
 
 
             containerRegistry.RegisterSingleton<ISimpleRequestService, SimpleRequestService>();

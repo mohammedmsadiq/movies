@@ -24,15 +24,18 @@ namespace movies.ViewModels
         private bool isLoadingInfinite;
         private int selectedViewModelIndex;
 
-
         public MoviesPageViewModel(INavigationService navigationService, IPageDialogService dialogService, ISimpleRequestService simpleRequestService) : base(navigationService, dialogService, simpleRequestService)
         {
+            this.loadData();
         }
 
-        public override void OnAppearing()
+        public DelegateCommand<Result> ItemSelectedCommand => new DelegateCommand<Result>(async (Item) => await this.ItemSelectedAction(Item));
+
+        private async Task ItemSelectedAction(Result item)
         {
-            base.OnAppearing();
-            this.loadData();
+            var navigationParams = new NavigationParameters();
+            navigationParams.Add("ItemSelected", item);
+            await NavigationService.NavigateAsync("MovieDetailPage", navigationParams);
         }
 
         private async Task loadData()
@@ -85,7 +88,7 @@ namespace movies.ViewModels
                         original_language = item.original_language,
                         original_title = item.original_title,
                         overview = item.overview,
-                        popularity = Math.Round(item.popularity, 0),
+                        popularity = item.popularity,
                         release_date = item.release_date,
                         title = item.title,
                         video = item.video,
@@ -113,7 +116,7 @@ namespace movies.ViewModels
                         original_language = item.original_language,
                         original_title = item.original_title,
                         overview = item.overview,
-                        popularity = Math.Round(item.popularity, 0),
+                        popularity = item.popularity,
                         release_date = item.release_date,
                         title = item.title,
                         video = item.video,
@@ -141,7 +144,7 @@ namespace movies.ViewModels
                         original_language = item.original_language,
                         original_title = item.original_title,
                         overview = item.overview,
-                        popularity = Math.Round(item.popularity, 0),
+                        popularity = item.popularity,
                         release_date = item.release_date,
                         title = item.title,
                         video = item.video,
@@ -229,7 +232,7 @@ namespace movies.ViewModels
         {
             get => this.isLoadingInfinite;
             set => SetProperty(ref this.isLoadingInfinite, value);
-        }       
+        }
 
         public int SelectedViewModelIndex
         {
