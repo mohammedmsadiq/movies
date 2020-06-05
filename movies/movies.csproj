@@ -34,6 +34,7 @@
     <Folder Include="Converters\" />
     <Folder Include="Controls\" />
     <Folder Include="Fonts\" />
+    <Folder Include="Styling\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Fonts\FontAwesomePro-Light.otf" />

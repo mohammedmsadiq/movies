@@ -6,12 +6,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com"
     xmlns:converter="clr-namespace:movies.Converters"
+    xmlns:styling="clr-namespace:movies.Styling"
     mc:Ignorable="d"
     x:Class="movies.App">
-    <Application.Resources>
+    <prism:PrismApplication.Resources>
         <ResourceDictionary>
             <converter:ImageStringFormatConverter
                 x:Key="ImageStringFormatConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <styling:ElementStyling/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </Application.Resources>
+    </prism:PrismApplication.Resources>
 </prism:PrismApplication>

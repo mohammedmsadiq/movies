@@ -33,7 +33,7 @@
             HorizontalOptions="Start"
             Margin="10"
             FontSize="Title"
-            TextColor="White"
+                    Style="{StaticResource LabelStyle}"
             Text="{Binding title}">
             <Label.Effects>
                 <controls:ShadowEffect
