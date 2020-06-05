@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading.Tasks;
 using movies.Interfaces;
@@ -14,7 +15,8 @@ namespace movies.ViewModels
         Result selectedItem;
 
         MovieDetailModel itemDetail;
-        
+        private ObservableCollection<Genre> genreData;
+
         public MovieDetailPageViewModel(INavigationService navigationService, IPageDialogService dialogService, ISimpleRequestService simpleRequestService) : base(navigationService, dialogService, simpleRequestService)
         {
         }
@@ -39,6 +41,23 @@ namespace movies.ViewModels
 
             string detailItem = selectedItem.id + URLParams.ToString();
             ItemDetail = await SimpleRequestService.GetSimpleAsync<MovieDetailModel>(detailItem);
+
+            GenreData = new ObservableCollection<Genre>();
+            GenreData.Clear();
+
+            if (ItemDetail.genres != null)
+            {
+                foreach (var item in ItemDetail.genres)
+                {
+                    this.GenreData.Add(item);
+                }
+            }
+        }
+
+        public ObservableCollection<Genre> GenreData
+        {
+            get => this.genreData;
+            set => SetProperty(ref this.genreData, value);
         }
 
         public MovieDetailModel ItemDetail

@@ -91,6 +91,36 @@
                                 HeightRequest="100"
                                 Aspect="AspectFill"
                                 Source="{Binding ItemDetail.poster_path, Converter={StaticResource ImageStringFormatConverter}}" />
+                            <CollectionView
+                                Grid.Column="1"
+                                Grid.Row="0"
+                                BackgroundColor="Transparent"
+                                ItemsSource="{Binding GenreData}">
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout
+                                        Orientation="Vertical"
+                                        Span="3" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout
+                                            Padding="5">
+                                            <Frame
+                                                BackgroundColor="Transparent"
+                                                BorderColor="Gray"
+                                                HeightRequest="30"
+                                                Padding="0">
+                                                <Label
+                                                    VerticalOptions="CenterAndExpand"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Style="{StaticResource LabelStyle}"
+                                                    FontSize="Micro"
+                                                    Text="{Binding name}" />
+                                            </Frame>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
                             <StackLayout
                                 Orientation="Horizontal"
                                 Grid.Row="1"
@@ -126,7 +156,6 @@
                                                     Color="White"
                                                     Size="30" />
                                             </Image.Source>
-
                                         </Image>
                                         <Label
                                             Style="{StaticResource LabelStyle}"
